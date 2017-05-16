@@ -5,11 +5,23 @@ apply plugin: 'war'
 repositories {
    mavenCentral()
 }
-war{
-	from('/'){ 
-		include('log4j.properties')
-		}
-}
+
 dependencies {
-   compile project(':SRB-2596')
+	compile project(':pureHibernateProject')
+	compile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.3'
+	compile group: 'junit', name: 'junit', version: '4.11'
+	
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.26-b02'
+	compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.19'
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.25.1'
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+	compile group: 'org.springframework', name: 'spring-beans', version: '4.3.8.RELEASE'
+	
+
+
+
+
+
+	
 }
