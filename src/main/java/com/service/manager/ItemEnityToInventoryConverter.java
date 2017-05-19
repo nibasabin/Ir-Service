@@ -1,10 +1,12 @@
 package com.service.manager;
 
+import org.springframework.stereotype.Component;
+
 import com.beans.ItemEntity;
 import com.dao.entity.Inventory;
 import com.dao.managers.InventoryManagerImpl;
 
-
+@Component
 public class ItemEnityToInventoryConverter {
 	
 	public Inventory convertItemEntityToInventory (ItemEntity itemEntity, InventoryManagerImpl inventoryManagerImpl){
