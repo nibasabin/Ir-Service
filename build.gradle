@@ -1,23 +1,36 @@
 
+
 apply plugin: 'java'
 apply plugin: 'war'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
    mavenCentral()
 }
 
 dependencies {
+def jerseyVersion= '2.12'
+def springVersion= '4.1.0.RELEASE'
+
+  //compile files('libs/pureHibernateProject.jar')
 	compile project(':pureHibernateProject')
 	compile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.3'
 	compile group: 'junit', name: 'junit', version: '4.11'
 	
-	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.26-b02'
-	compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.19'
-	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.25.1'
-	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-	compile group: 'org.springframework', name: 'spring-beans', version: '4.3.8.RELEASE'
-	
+	compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
+
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: jerseyVersion
+	compile (group: 'org.glassfish.jersey.ext', name:'jersey-spring3',version:jerseyVersion){
+	  	exclude group:'org.springframework', module:'spring-beans'
+	  	exclude group:'org.springframework', module:'spring-core'
+	  	exclude group:'org.springframework', module:'spring-web'
+	  	exclude group:'org.springframework', module:'jersey-container-servlet-core'
+	  	exclude group:'org.springframework', module:'hk2'
+	  	}
+
 
 
 

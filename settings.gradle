@@ -1,4 +1,6 @@
 
 rootProject.name = 'Ir-Service'
-include   ':pureHibernateProject'
+
+include ':pureHibernateProject'
 project(':pureHibernateProject').projectDir = new File(settingsDir, '../pureHibernateProject')
+

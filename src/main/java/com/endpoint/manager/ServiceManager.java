@@ -9,32 +9,40 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 
 import com.beans.ItemEntity;
 import com.dao.entity.Inventory;
+import com.dao.entity.InventoryType;
+import com.dao.entityManagerFactory.SessionFactoryInstance;
 import com.dao.managers.InventoryManagerImpl;
 import com.service.manager.ItemEnityToInventoryConverter;
+
+
 @Path("/InventoryEndPoint")
 public class ServiceManager {
 
+@Autowired
+InventoryManagerImpl inventoryManagerImpl;
 
+
+	
 	@POST
 	@Path("/addInventory")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response  addInventory(ItemEntity  itemEntity){
 //	
-//context = new ClassPathXmlApplicationContext("springMVC.xml");
-//	InventoryManagerImpl inventoryManagerImpl = (InventoryManagerImpl)context.getBean("inventoryManagerImpl");
 		System.out.println("Item Name "+ itemEntity.getType());
 		System.out.println("Item Description "+ itemEntity.getDescription());
 		System.out.println("Item Quantity "+ itemEntity.getPrice());
 		System.out.println("Item UnitPrice "+ itemEntity.getImage());
 			
-		InventoryManagerImpl inventoryManagerImpl = new InventoryManagerImpl();
 		ItemEnityToInventoryConverter entityToInventory = new ItemEnityToInventoryConverter();
 		Inventory inventory = entityToInventory.convertItemEntityToInventory(itemEntity , inventoryManagerImpl);
 		inventoryManagerImpl.addInventory(inventory);
@@ -67,14 +75,33 @@ public class ServiceManager {
 
 
 
-	@GET
-	@Path("/test")
-	//@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
-	@Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
-	public Library  test(){
-		Library library = new Library();
-		library.setAge("25");
-		library.setName("sabin");
-		return library;
-}
+//	@GET
+//	@Path("/test")
+//	//@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
+//	@Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
+//	public Library  test(){
+//		Library library = new Library();
+//		library.setAge("25");
+//		library.setName("sabin");
+//		return library;
+//}
+	public static void main(String args[]){
+		SessionFactoryInstance obj = new SessionFactoryInstance();
+		SessionFactory factory = obj.createSession();
+		Session session = factory.openSession();
+		InventoryType inventoryType = new InventoryType();
+		inventoryType.setInventoryTypeId(109);
+		inventoryType.setInventoryType("Speaker");
+		Transaction transaction = null ;
+		try{
+			transaction = session.beginTransaction();
+			session.persist(inventoryType);
+			transaction.commit();		
+		}catch(HibernateException e){
+	        if (transaction!=null) transaction.rollback();
+	        e.printStackTrace(); 
+	     }finally {
+	        session.close(); 
+	     }
+	}
 }

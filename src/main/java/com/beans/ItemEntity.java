@@ -1,9 +1,7 @@
 package com.beans;
 
 import java.io.Serializable;
-
-import org.springframework.stereotype.Component;
-@Component
+//@Component
 public class ItemEntity implements Serializable{
 
 	private static final long serialVersionUID = 5585503187390864060L;

@@ -28,12 +28,9 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 <mvc:annotation-driven />
 <context:annotation-config/>
-<bean class ="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+<!-- <bean class ="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/> -->
 
-<context:component-scan base-package="com.dao.managers" />
-<context:component-scan base-package="com.config.bean" />
-<context:component-scan base-package="com.beans" />
-<context:component-scan base-package="com.endpoint.manager" />
-<context:component-scan base-package="com.service.manager" />
-<bean id = "serviceManager" class ="com.endpoint.manager.ServiceManager"/>
+
+<context:component-scan base-package="com.endpoint.manager,com.dao.managers,com.service.manager" />
+<!-- <bean id = "serviceManager" class ="com.endpoint.manager.ServiceManager"/> -->
 </beans>
