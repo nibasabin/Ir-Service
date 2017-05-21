@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.beans.ItemEntity;
 import com.dao.entity.Inventory;
+import com.dao.exception.DataBaseException;
 import com.dao.managers.InventoryManagerImpl;
 
 @Component
@@ -23,7 +24,12 @@ public class ItemEnityToInventoryConverter {
 		if (itemEntity.getPrice()!=null){
 			inventory.setInventoryPrice(itemEntity.getPrice());
 		}
-		inventory.setInventoryTypeId(inventoryManagerImpl.getInventoryTypeId(itemEntity.getType()));
+		try {
+			inventory.setInventoryTypeId(inventoryManagerImpl.getInventoryTypeId(itemEntity.getType()));
+		} catch (DataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return inventory;
 	}

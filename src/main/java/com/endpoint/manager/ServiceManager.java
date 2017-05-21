@@ -20,6 +20,7 @@ import com.beans.ItemEntity;
 import com.dao.entity.Inventory;
 import com.dao.entity.InventoryType;
 import com.dao.entityManagerFactory.SessionFactoryInstance;
+import com.dao.exception.DataBaseException;
 import com.dao.managers.InventoryManagerImpl;
 import com.service.manager.ItemEnityToInventoryConverter;
 
@@ -45,7 +46,12 @@ ItemEnityToInventoryConverter entityToInventory;
 		System.out.println("Item UnitPrice "+ itemEntity.getImage());
 			
 		Inventory inventory = entityToInventory.convertItemEntityToInventory(itemEntity , inventoryManagerImpl);
-		inventoryManagerImpl.addInventory(inventory);
+		try {
+			inventoryManagerImpl.addInventory(inventory);
+		} catch (DataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 			String result = "Successful";
 			return Response.status(200).entity(result).build();
