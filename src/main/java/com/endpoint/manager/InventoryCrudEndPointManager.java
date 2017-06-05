@@ -26,7 +26,7 @@ import com.service.manager.ItemEnityToInventoryConverter;
 
 
 @Path("/InventoryEndPoint")
-public class ServiceManager {
+public class InventoryCrudEndPointManager {
 
 @Autowired
 InventoryManagerImpl inventoryManagerImpl;
@@ -37,7 +37,7 @@ ItemEnityToInventoryConverter entityToInventory;
 	@POST
 	@Path("/addInventory")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response  addInventory(ItemEntity  itemEntity){
 	
 		System.out.println("Item Name "+ itemEntity.getType());

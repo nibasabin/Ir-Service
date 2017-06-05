@@ -13,10 +13,15 @@
 			<param-value>com.endpoint.manager</param-value>
 		</init-param>
 
-		<init-param>
+<!-- 		<init-param>
+		  <param-name>jersey.config.server.provider.classnames</param-name>
+		  <param-value>org.glassfish.jersey.jackson.JacksonFeature</param-value>
+		</init-param> -->
+		
+<!-- 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 			<param-value>true</param-value>
-		</init-param>
+		</init-param> -->
 	</servlet>
 
 	<servlet-mapping>

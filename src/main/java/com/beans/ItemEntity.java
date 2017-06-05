@@ -1,6 +1,9 @@
 package com.beans;
 
 import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class ItemEntity implements Serializable{
 
 	private static final long serialVersionUID = 5585503187390864060L;
