@@ -1,6 +1,5 @@
 package com.endpoint.manager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -12,36 +11,37 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.beans.FilterCriteriaObject;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.beans.FilterCriteriaEntity;
 import com.beans.ItemEntity;
-import com.beans.ItemEntityList;
+import com.dao.entity.FilterCriteriaObject;
+import com.dao.entity.Inventory;
+import com.dao.managers.InventoryManager;
+import com.service.manager.FilterCriteriaConverter;
+import com.service.manager.InventoryToItemEntityConverter;
 
 @Path("/service")
 public class serviceEndPointManager {
+	
+	@Autowired
+	InventoryManager inventoryManager;
+	
+	@Autowired
+	InventoryToItemEntityConverter inventoryToItemEntityConverter ;
+	
+	@Autowired
+	FilterCriteriaConverter FilterCriteriaConverter;
 	
 	@POST
 	@Path("/getFilterdResults")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFilteredResult(FilterCriteriaObject filterCriteria){
-		//ItemEntityList itemEntityList = new ItemEntityList();
-		List<ItemEntity> list = new ArrayList<ItemEntity>();
-		
-		ItemEntity itemEntity = new ItemEntity();
-		itemEntity.setType("laalala");
-		itemEntity.setPrice(34);
-		itemEntity.setDescription("dfdafda");
-		
-		ItemEntity itemEntity2 = new ItemEntity();
-		itemEntity2.setType("laalala");
-		itemEntity2.setPrice(34);
-		itemEntity2.setDescription("dfdafda");
-		
-		list.add(itemEntity);
-		list.add(itemEntity2);
-	//	itemEntityList.setItemEntityList(list);
-		
-		GenericEntity< List< ItemEntity > > entity = new GenericEntity< List< ItemEntity > >( list ) { };
+	public Response getFilteredResult(FilterCriteriaEntity filterCriteria){
+		FilterCriteriaObject  filterCriteriaObject= FilterCriteriaConverter.convertEntityToObject(filterCriteria);
+		List<Inventory> inventoryList = inventoryManager.getFilteredInventory(filterCriteriaObject);
+		List<ItemEntity> itemEntityLit = inventoryToItemEntityConverter.convertInventoryToItemEntityList(inventoryList);		
+		GenericEntity< List< ItemEntity > > entity = new GenericEntity< List< ItemEntity > >( itemEntityLit ) { };
 		return Response.ok( entity ).build();
 
 
@@ -52,22 +52,9 @@ public class serviceEndPointManager {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllInventory(){
-		List<ItemEntity> list = new ArrayList<ItemEntity>();
-		
-		ItemEntity itemEntity = new ItemEntity();
-		itemEntity.setType("laalala");
-		itemEntity.setPrice(34);
-		itemEntity.setDescription("dfdafda");
-		
-		ItemEntity itemEntity2 = new ItemEntity();
-		itemEntity2.setType("laalala");
-		itemEntity2.setPrice(34);
-		itemEntity2.setDescription("dfdafda");
-		
-		list.add(itemEntity);
-		list.add(itemEntity2);
-		
-		GenericEntity< List< ItemEntity > > entity = new GenericEntity< List< ItemEntity > >( list ) { };
+		List<Inventory> inventoryList = inventoryManager.getAllInventory();
+		List<ItemEntity> itemEntityList = inventoryToItemEntityConverter.convertInventoryToItemEntityList(inventoryList);		
+		GenericEntity< List< ItemEntity > > entity = new GenericEntity< List< ItemEntity > >( itemEntityList ) { };
 		return Response.ok( entity ).build();
 
 

@@ -54,7 +54,7 @@ public class UserCrudEndPointManager {
 		@Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
 		public ItemEntity  test(){
 			ItemEntity itemEntity = new ItemEntity();
-			itemEntity.setPrice(25);
+			itemEntity.setPrice(new Double(25.00));
 			itemEntity.setDescription("sabin");
 			return itemEntity;
 	}
