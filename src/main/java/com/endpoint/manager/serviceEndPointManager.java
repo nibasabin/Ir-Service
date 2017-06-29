@@ -48,12 +48,12 @@ public class serviceEndPointManager {
 
 	}
 	
-	@GET
+	@POST
 	@Path("/getAllInventory")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllInventory(){
-		List<Inventory> inventoryList = inventoryManager.getAllInventory();
+	public Response getAllInventory(String category){
+		List<Inventory> inventoryList = inventoryManager.getAllInventory(category);
 		List<ItemEntity> itemEntityList = inventoryToItemEntityConverter.convertInventoryToItemEntityList(inventoryList);		
 		GenericEntity< List< ItemEntity > > entity = new GenericEntity< List< ItemEntity > >( itemEntityList ) { };
 		return Response.ok( entity ).build();
