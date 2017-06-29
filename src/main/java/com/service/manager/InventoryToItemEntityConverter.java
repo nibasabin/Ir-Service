@@ -31,7 +31,7 @@ public class InventoryToItemEntityConverter {
 			}
 			
 			if(inventory.getInventoryImage() != null){
-				//itemEntity.setImage(inventory.getInventoryImage());
+				itemEntity.setImage( new String(inventory.getInventoryImage()));
 			}
 			
 			if(inventory.getInventoryType() != null){
@@ -43,6 +43,9 @@ public class InventoryToItemEntityConverter {
 			}
 			if(inventory.getUsedInventory() != null){
 				itemEntity.setUsedItem(inventory.getUsedInventory());
+			}
+			if(inventory.getItemSold() != null){
+				itemEntity.setItemSold(inventory.getItemSold());
 			}
 			
 			itemEntityList.add(itemEntity);

@@ -17,6 +17,7 @@ import com.beans.FilterCriteriaEntity;
 import com.beans.ItemEntity;
 import com.dao.entity.FilterCriteriaObject;
 import com.dao.entity.Inventory;
+import com.dao.exception.DataBaseException;
 import com.dao.managers.InventoryManager;
 import com.service.manager.FilterCriteriaConverter;
 import com.service.manager.InventoryToItemEntityConverter;
@@ -56,7 +57,48 @@ public class serviceEndPointManager {
 		List<ItemEntity> itemEntityList = inventoryToItemEntityConverter.convertInventoryToItemEntityList(inventoryList);		
 		GenericEntity< List< ItemEntity > > entity = new GenericEntity< List< ItemEntity > >( itemEntityList ) { };
 		return Response.ok( entity ).build();
+	}
+	
+	@POST
+	@Path("/getUsersInventory")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUsersInventory(String userName){
+		List<Inventory> inventoryList = inventoryManager.getUsersInventory(userName);
+		List<ItemEntity> itemEntityList = inventoryToItemEntityConverter.convertInventoryToItemEntityList(inventoryList);		
+		GenericEntity< List< ItemEntity > > entity = new GenericEntity< List< ItemEntity > >( itemEntityList ) { };
+		return Response.ok( entity ).build();
+	}
+	
+	@POST
+	@Path("/addToGlobalInventory")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addToGlobalInventory(String userName){
+		try {
+			inventoryManager.addToGlobalInventory(Integer.parseInt(userName));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+	}
+	
+	@POST
+	@Path("/deleteItem")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteItem(String userName){
+		try {
+			inventoryManager.deleteItem(Integer.parseInt(userName));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }

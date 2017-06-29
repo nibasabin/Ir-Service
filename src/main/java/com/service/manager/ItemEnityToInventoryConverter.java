@@ -12,6 +12,9 @@ public class ItemEnityToInventoryConverter {
 	
 	public Inventory convertItemEntityToInventory (ItemEntity itemEntity, InventoryManagerImpl inventoryManagerImpl){
 		Inventory inventory = new Inventory();
+		if(itemEntity.getCategory() != null){
+			inventory.setInventoryCategory(itemEntity.getCategory());
+		}
 		if(itemEntity.getType()!= null){
 			inventory.setInventoryType(itemEntity.getType());
 		}
@@ -23,6 +26,19 @@ public class ItemEnityToInventoryConverter {
 		}
 		if (itemEntity.getPrice()!=null){
 			inventory.setInventoryPrice(itemEntity.getPrice());
+		}
+		if(itemEntity.getNewItem() !=null){
+			inventory.setNewInventory(itemEntity.getNewItem());
+		}
+		
+		if(itemEntity.getUsedItem() != null){
+			inventory.setUsedInventory(itemEntity.getUsedItem());
+		}
+		if(itemEntity.getSellerName() != null){
+			inventory.setSellerName(itemEntity.getSellerName());
+		}
+		if(itemEntity.getItemSold() != null){
+			inventory.setItemSold(itemEntity.getItemSold());
 		}
 		try {
 			inventory.setInventoryTypeId(inventoryManagerImpl.getInventoryTypeId(itemEntity.getType()));
