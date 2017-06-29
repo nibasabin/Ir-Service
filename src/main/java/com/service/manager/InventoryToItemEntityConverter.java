@@ -47,7 +47,9 @@ public class InventoryToItemEntityConverter {
 			if(inventory.getItemSold() != null){
 				itemEntity.setItemSold(inventory.getItemSold());
 			}
-			
+			if(inventory.getSellerName() != null){
+				itemEntity.setSellerName(inventory.getSellerName());
+			}
 			itemEntityList.add(itemEntity);
 		}
 		return itemEntityList;
